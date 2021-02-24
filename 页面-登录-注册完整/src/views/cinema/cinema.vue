@@ -1,8 +1,7 @@
 <template>
   <div>
     <comtop></comtop>
-    <comloading v-if="!isflag"></comloading>
-    <div class="cinemalist" v-if="isflag">
+    <div class="cinemalist">
     <ul>
         <li v-for="(item, index) in cinemalist" :key="index">
           <div class="info">
@@ -28,12 +27,11 @@
 // import "@/assets/font_2223794_u8ys5fsrcoe/iconfont.css";
 import { cinemaListData } from "@/api/api";
 import comtop from "@/components/comtop";
-import comloading from '@/components/comloading.vue'
 export default {
     name: 'cinema',
     props:[],
     components: {
-     comtop,comloading
+     comtop
     },
     data() {
       return {
@@ -46,9 +44,6 @@ export default {
     },
     //计算属性
     computed: {
-      isflag(){
-        return this.list1[0]
-      }
     },
     //侦听器
     watch: {
