@@ -2,7 +2,7 @@
   <div>
     <comtop></comtop>
     <div class="cinemalist">
-    <ul>
+      <ul>
         <li v-for="(item, index) in cinemalist" :key="index">
           <div class="info">
             <p class="cinemaname">{{ item.name }}</p>
@@ -16,79 +16,50 @@
               }}</span>
               <span class="upon">起</span>
             </span>
-            <span class="postiton">{{item.Distance|distance}}</span>
+            <span class="postiton">{{ item.Distance | distance }}</span>
           </div>
         </li>
       </ul>
-      </div>
+    </div>
   </div>
 </template>
 <script>
-// import "@/assets/font_2223794_u8ys5fsrcoe/iconfont.css";
 import { cinemaListData } from "@/api/api";
 import comtop from "@/components/comtop";
 export default {
-    name: 'cinema',
-    props:[],
-    components: {
-     comtop
-    },
-    data() {
-      return {
-     cinemalist:[],
-      value: "1",
-      };
-    },
-    //方法 函数写这里
-    methods: {
-    },
-    //计算属性
-    computed: {
-    },
-    //侦听器
-    watch: {
-     
-    },
-    //过滤器
-    filters: {
-  price(value) {
+  name: "cinema",
+  props: [],
+  components: {
+    comtop,
+  },
+  data() {
+    return {
+      cinemalist: [],
+    };
+  },
+  //过滤器
+  filters: {
+    price(value) {
       return parseFloat(value / 100);
     },
     distance(va) {
       return va.toFixed(2) + "KM";
-    },
-    },
+    }
+  },
 
-    //以下是生命周期
-    //组件创建之前
-    beforeCreate() {},
-    //组件创建之后
-   async created() {
-       let ret = await cinemaListData(this.$store.state.cinemaid);
-      this.cinemalist = ret.data.data.cinemas;
-      // console.log(ret);
-      console.log(this.cinemalist);
-    },
+  //组件创建之后
+  async created() {
+    let ret = await cinemaListData(this.$store.state.cinemaid);
+    this.cinemalist = ret.data.data.cinemas;
+    // console.log(this.cinemalist);
+  },
 
-    //页面渲染之前
-    beforeMount() {},
-    //页面渲染之后
-     mounted() {
-      //  解决bug  vue是单页面，点击大城市的时候，页面比较多，跳转到另一个页面，滚动条还是原先的数
-       window.scroll(0,0)
-    },
-
-    //页面视图数据更新之前
-    beforeUpdate() {},
-    //页面视图数据更新之后
-    updated() {},
-    
-     //页面销毁之前
-    beforeDestroy() {},
-    //页面销毁之后
-    destroyed() {},
-  }
-  </script>
+  mounted() {
+    //  解决bug  vue是单页面，点击大城市的时候，页面比较多，跳转到另一个页面，滚动条还是原先的数
+    window.scroll(0, 0);
+  },
+};
+</script>
   
 <style lang="scss" scoped>
 .cinemalist {
@@ -140,6 +111,4 @@ export default {
     }
   }
 }
-
-
 </style> 

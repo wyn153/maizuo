@@ -1,10 +1,7 @@
 // 这个页面设置vuex全局
-
 import Vue from 'vue'
 import Vuex from 'vuex'
-
 Vue.use(Vuex)
-
 export default new Vuex.Store({
   state: {
     store1:'外星人',
@@ -23,35 +20,22 @@ export default new Vuex.Store({
   // 不要在mutation中写异步的代码
   mutations: {
     add( state, step){
-      console.log('state',state);
-      console.log('step',step);
       state.count = state.count+step
     },
     // 设置城市名字
     add2(state, step) {
-      console.log("我进入mutations里面了add2 ");
-      console.log('step',step)
       state.city = step
     },
      // 设置城市列表的城市序号
     cinemaidadd(state,step) {
-      console.log('进入cinemaidadd里面了')
       state.cinemaid = step 
     },
     usermobile(state,step) {
-      console.log('进入usermobile里面了')
       state.usermobile = step
     },
     tokenadd(state,step){
-      console.log('进入了tokenadd');
       state.token = step 
     }
-  
-  
-  // 触发mutations
-  // add1(){
-  //  this.$store.commit('add',1)
-  // },
   },
   // 可以在 actions 中写异步
   actions: {
@@ -63,9 +47,5 @@ export default new Vuex.Store({
         context.commit("add", step);
       }, 3000);
     }
-  },
-  // 触发actions
-  // add2(){
-  //  this.$store.dispatch('action1',50)
-  // },
+  }
 })

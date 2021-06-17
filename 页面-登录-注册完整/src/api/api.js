@@ -5,7 +5,6 @@ import {
   nowPlayingListUri,moiveDetailUrl,comingSoonListUri,cityListUrl,cinemaListUrl,loginUrl
 } from "@/config/url";
 
-
 // 暴露出  nowpalying中引入 
 export const nowPlayingListData = (page = 1) => {
   http.defaults.headers.info =''
@@ -13,13 +12,10 @@ export const nowPlayingListData = (page = 1) => {
   return http.get(nowPlayingListUri + page);
 };
 
-
 export const comingSoonListData = (pageNum) => {
   http.defaults.headers.info = ''
   return http.get(comingSoonListUri + pageNum);
 }
-
-
 
 // api.js 和 url.js 是film.vue中的封装。二选一即可
 
@@ -76,10 +72,6 @@ export const cityListData = async () => {
           });
       }
   })
-  console.log('indexlist',indexList)
-  // console.log(dataList)
-  // 返回了一个包装对象
-  
   // 也可以 return [dataList, indexList];  返回结果是相同的 
   // promise 是本地的，不需要引入  跟async await结合使用  带着成功的返回去
   return Promise.resolve([dataList, indexList]);

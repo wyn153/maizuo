@@ -10,7 +10,7 @@ export default {
   //组件名字
   name: "test",
   // vue数据集中管理
-  data(){
+  data() {
     return {
       message: "孙悟空",
     };
@@ -19,19 +19,12 @@ export default {
   //页面渲染之后
   mounted() {
     this.message = "菩提老祖";
-    // 这一步是异步操作  更改xiaoming的值 
+    // 这一步是异步操作  更改xiaoming的值
     console.log("first", this.$refs.xiaoming.innerHTML);
-    // console.log('ddddd')
     // 解决1：常用
     this.$nextTick(() => {
       console.log("second", this.$refs.xiaoming.innerHTML);
-    });
-
-    // 解决2：不常用
-    // setTimeout(()=>{
-    //     console.log("second", this.$refs.xiaoming.innerHTML);
-    // },100)
-  },
-};
-
+    })
+  }
+}
 </script>

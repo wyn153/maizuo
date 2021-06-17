@@ -51,25 +51,23 @@ const router = new VueRouter({
 })
 
 // 全局路由守卫
-router.beforeEach((to,from,next)=>{
-  // 只有进入center页面时 需要强制登录
-  let arr =['/center']
-  // 即将跳转的下一个页面。arr里面有，
-  if(arr.includes(to.path)){
-    // arr.includes(to.path) 
-    if(store.state.token) {
-      //如果是认证过的用户，所以就直接放行
-      next()
-    } else {
-      // 如果不是我们认证过 直接跳login
-      next({path:'/login'})
-    }
- }else {
-   //如果是 不需要登录 也能直接让用户看 吸引用户粉丝的页面  不是center页面的则直接让用户放行
-   next()
-  }
-})
-
-
+// router.beforeEach((to,from,next)=>{
+//   // 只有进入center页面时 需要强制登录
+//   let arr =['/center']
+//   // 即将跳转的下一个页面。arr里面有，
+//   if(arr.includes(to.path)){
+//     // arr.includes(to.path) 
+//     if(store.state.token) {
+//       //如果是认证过的用户，所以就直接放行
+//       next()
+//     } else {
+//       // 如果不是我们认证过 直接跳login
+//       next({path:'/login'})
+//     }
+//  }else {
+//    //如果是 不需要登录 也能直接让用户看 吸引用户粉丝的页面  不是center页面的则直接让用户放行
+//    next()
+//   }
+// })
 
 export default router

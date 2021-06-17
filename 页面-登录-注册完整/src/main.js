@@ -19,14 +19,6 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
-
-// swiper
-// import vueSwiper from 'vue-awesome-swiper'
-/* 样式的话，我这里有用到分页器，就在全局中引入了样式 */
-// import 'swiper/dist/css/swiper.css'
-// Vue.use(vueSwiper);
-
-
 // vue中的bus   总线机制
 // prototype  ---> 共有属性
 Vue.prototype.eventBus = new Vue()
@@ -37,7 +29,6 @@ Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 
-
 // 懒加载，在图片数据还没有更新之前显示的loding图片，----
 import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload, {
@@ -45,7 +36,7 @@ Vue.use(VueLazyload, {
 // loading: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3266227385,3580863888&fm=26&gp=0.jpg",
 
 // 第二种 引入内部的----常用
-loading:'/a/loading-bubbles.svg'
+loading:'/a/loading-bars.svg'
 });
 
 Vue.config.productionTip = false

@@ -13,49 +13,18 @@
 </template>
 <script>
 // import "@/assets/font_2223794_u8ys5fsrcoe/iconfont.css";
-
 export default {
   name: "comtop",
-  props: [],
-  components: {},
-  data() {
-    return {};
-  },
   //方法 函数写这里
   methods: {
     aaa() {
       // 在影院列表点击进入左上角城市，进入城市列表
-      this.$router.push("/city");
-    },
-  },
-  //计算属性
-  computed: {},
-  //侦听器
-  watch: {},
-  //过滤器
-
-  //以下是生命周期
-  //组件创建之前
-  beforeCreate() {},
-  //组件创建之后
-
-  //页面渲染之前
-  beforeMount() {},
-  //页面渲染之后
-  mounted() {},
-
-  //页面视图数据更新之前
-  beforeUpdate() {},
-  //页面视图数据更新之后
-  updated() {},
-
-  //页面销毁之前
-  beforeDestroy() {},
-  //页面销毁之后
-  destroyed() {},
-};
+      this.$router.push("/city")
+    }
+  }
+}
 </script>
-  
+
 <style lang="scss" scoped>
 .comtop {
   position: fixed;
@@ -75,7 +44,6 @@ export default {
     text-align: center;
     margin-right: 30px;
   }
-
 }
 
 .iconfont {

@@ -45,16 +45,14 @@
     </el-container>
   </div>
 </template>
-
 <script>
 import { userLogin } from "@/api/api";
-
 export default {
   data() {
     return {
       formData: {
         mobile: "",
-        password: "",
+        password: ""
       },
       rules: {
         mobile: [
@@ -70,7 +68,7 @@ export default {
             // 输入错误的时候显示
             message: "手机号格式不正确！",
             trigger: "blur",
-          },
+          }
         ],
         password: [
           {
@@ -84,27 +82,15 @@ export default {
             max: 20,
             message: "长度在 6 到 20 个字符",
             trigger: "blur",
-          },
-        ],
-      },
-    };
+          }
+        ]
+      }
+    }
   },
-
-  //计算属性
-  computed: {},
-  //侦听器
-  watch: {},
-  //过滤器
-  filters: {},
-  //以下是生命周期
-  //组件创建之前
-  beforeCreate() {},
   //组件创建之后
   created() {
     this.eventBus.$emit("footernav", false);
   },
-  //页面渲染之前
-  beforeMount() {},
   //页面渲染之后
   methods: {
     loginZhuce() {
@@ -115,24 +101,18 @@ export default {
       //这里的async 是因为里面有异步请求
       this.$refs[formName].validate(async (valid) => {
         // valid的意思是  必须rules 那里全是true 全部效验通过 valid才会变为true
-        console.log("valid", valid);
         if (valid) {
-          console.log("valid为true了");
           // 获取用户名和密码进行提交（API）
           let ret = await userLogin(this.formData);
           console.log(ret);
           if (ret.data.code == 1000) {
             // 登录成功（存储token、跳转）
-            console.log("进入code1000里面了");
-            console.log(ret.data.mobile);
             //我们往 vuex 总商店触发mutation变异器 去改变里面的mobile.利用vuex 则所有的页面都可以使用这些数据
             this.$store.commit("usermobile", ret.data.mobile);
             // vuex 查看token
             this.$store.commit("tokenadd", ret.data.data._token);
-            console.log('token完成，即将去vuex');
-          // 为了持久化存储，我们把token放进去localstorage里面
-          localStorage.setItem('_token',ret.data.data._token)
-
+            // 为了持久化存储，我们把token放进去localstorage里面
+            localStorage.setItem("_token", ret.data.data._token);
             this.$message({
               message: "success 即将跳转个人中心",
               type: "success",
@@ -154,8 +134,6 @@ export default {
       });
     },
   },
-  //页面销毁之前
-  beforeDestroy() {},
   //页面销毁之后
   destroyed() {
     this.eventBus.$emit("footernav", true);

@@ -1,72 +1,76 @@
 <template>
   <div class="detail">
-    <div>
-      <ul>
-        <li @click="$router.go(-1)">回退</li>
-      </ul>
-    </div>
-    <div class="img">
-      <img v-lazy="film.poster"/>
-    </div>
-    <div class="film-detail">
-      <div>{{ film.name }}</div>
-      <div>{{ film.category }}</div>
-      <div>{{ film.premiereAt | timeparser }}上映</div>
-      <div>{{ film.nation }} | {{ film.runtime }} 分钟</div>
+    <comloading v-if="watchflag"></comloading>
+    <div v-if="!watchflag">
       <div>
-        {{ film.synopsis }}
+        <ul>
+          <li @click="$router.go(-1)">回退</li>
+        </ul>
       </div>
-      <!-- 两种方法获取name值，这里的name为双层， -->
-      <!-- <div v-if="film.item">
+      <div class="img">
+        <img v-lazy="film.poster" />
+      </div>
+      <div class="film-detail">
+        <div>{{ film.name }}</div>
+        <div>{{ film.category }}</div>
+        <div>{{ film.premiereAt | timeparser }}上映</div>
+        <div>{{ film.nation }} | {{ film.runtime }} 分钟</div>
+        <div>
+          {{ film.synopsis }}
+        </div>
+        <!-- 两种方法获取name值，这里的name为双层， -->
+        <!-- <div v-if="film.item">
        先给隐藏，数据来了的时候再显示
         电影级别 {{film.item.name}}
       </div> -->
-      <div>
-        <!-- 第二种直接更改为了单层 -->
-        电影级别 {{ d }}
-      </div>
-<!-- 轮播图 -->
+        <div>
+          <!-- 第二种直接更改为了单层 -->
+          电影级别 {{ d }}
+        </div>
+        <!-- 轮播图 -->
         <!-- 组件进入 comswiper的插槽中， -->
         <!-- :key="film.actors.length" 的作用 ：数据延迟,生命周期重新走一遍  不加，数据在detail页面，comswiper在插槽中,没有携带数据，加了key值后detail重新走生命周期，comswiper中的值则带入到插槽中， -->
-   <div class="renyuan">演职人员</div>
-      <comswiper :key="film.actors.length" class="actors-item">
-        <div v-for="(items,index) in film.actors" :key="index" class="swiper-slide">
-          <img v-lazy='items.avatarAddress' alt="">
-          <span class="actors-name">{{items.name}}</span>
-          <span class="actors-role">{{items.role}}</span>
-        </div>
-      </comswiper>
+        <div class="renyuan">演职人员</div>
+        <comswiper :key="film.actors.length" class="actors-item">
+          <div
+            v-for="(items, index) in film.actors"
+            :key="index"
+            class="swiper-slide"
+          >
+            <img v-lazy="items.avatarAddress" alt="" />
+            <span class="actors-name">{{ items.name }}</span>
+            <span class="actors-role">{{ items.role }}</span>
+          </div>
+        </comswiper>
+      </div>
     </div>
   </div>
-
-
 </template>
 <script>
-// 引入数据
+import comloading from "@/components/comloading.vue";
 import { moiveDetail } from "@/api/api.js";
-// 引入时间的插件
 import moment from "moment";
 // 引入轮播图的插件
 import comswiper from "@/components/comswiper.vue";
 export default {
   name: "detail",
-  props: [],
   components: {
     comswiper,
+    comloading
   },
   data() {
     return {
       d: "",
       film: { actors: [] },
+      watchflag: true,
     };
   },
-
-  //方法 函数写这里
-  methods: {},
-  //计算属性
-  computed: {},
   //侦听器
-  watch: {},
+  watch: {
+    film: function (newval) {
+      this.watchflag = false;
+    },
+  },
   //过滤器
   filters: {
     // 设置时间
@@ -74,39 +78,17 @@ export default {
       return moment(value * 1000).format("YYYY-MM-DD");
     },
   },
-
-  //以下是生命周期
-  //组件创建之前
-  beforeCreate() {},
   //组件创建之后
   async created() {
-    // console.log("我进入detail页面的 mounted里面了");
-    // console.log(this.$route.params.filmId);
     let ret = await moiveDetail(this.$route.params.filmId);
     this.$nextTick(() => {
-      //http.get(moiveDetailUrl + filmId)
-      // console.log(ret);
       this.film = ret.data.data.film;
-      console.log(this.film);
       this.d = this.film.item.name;
       // 向外发射数据   发送名 footernav   发送带的东西 false  main.js中添加了propotype、在此处则不需要再次添加，全局感染了，
       // 进入这个页面后，发送了footernav   携带了false参数
       this.eventBus.$emit("footernav", false);
     });
   },
-
-  //页面渲染之前
-  beforeMount() {},
-  // 页面渲染之后
-  mounted() {
-  },
-  //页面视图数据更新之前
-  beforeUpdate() {},
-  //页面视图数据更新之后
-  updated() {},
-
-  //页面销毁之前
-  beforeDestroy() {},
   //页面销毁之后
   destroyed() {
     // 销毁以后再次发送  这里的is_show 为true则显示
@@ -115,9 +97,6 @@ export default {
   },
 };
 </script>
-
-
-
 <style lang="scss" scoped>
 body {
   background-color: #f4f4f4 !important;
